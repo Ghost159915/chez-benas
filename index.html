@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1d0a0f">
+<meta name="color-scheme" content="dark">
+<title>Chez Benas</title>
+<meta name="description" content="Dinner at mine tonight, steak for two. Choose your menu.">
+<meta property="og:title" content="You're invited to Chez Benas">
+<meta property="og:description" content="Dinner at mine tonight, steak for two. Choose your menu.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Courier+Prime:wght@400;700&family=Jost:wght@400;500;600&display=swap">
+<style>
+/* Layout: one phone-width column. A candlelit invitation that walks course by course and ends on a kitchen docket. */
+:root{
+  --bg:#1d0a0f;
+  --surface:#29111a;
+  --surface-2:#371922;
+  --line:#4b2731;
+  --fg:#f8ebe8;
+  --muted:#c4a1a6;
+  --accent:#f4a3b1;
+  --accent-ink:#2a0c13;
+  --accent-soft:rgba(244,163,177,.12);
+  --glow:rgba(244,163,177,.11);
+  --gold:#ddb874;
+  --paper:#f7eeeb;
+  --ink:#2b171b;
+  --ink-muted:#7d6166;
+  --shadow:rgba(0,0,0,.55);
+  --crust:#5b2f22;
+  --done-1:#a51d33;
+  --done-2:#c43d52;
+  --done-3:#d97a7f;
+  --done-4:#b98b80;
+  --done-5:#86695e;
+  --display:"Bodoni Moda","Bodoni 72","Didot",Georgia,serif;
+  --body:"Jost","Avenir Next","Helvetica Neue",system-ui,sans-serif;
+  --mono:"Courier Prime","Courier New",ui-monospace,monospace;
+  --r:14px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--bg);-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  padding-top:env(safe-area-inset-top, 0px);
+  background-color:var(--bg);
+  background-image:radial-gradient(130% 55% at 50% -8%, var(--glow), transparent 62%);
+  background-repeat:no-repeat;
+  color:var(--fg);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+[data-focus]:focus{outline:none}
+
+.wrap{
+  max-width:30rem;margin:0 auto;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  padding-block:20px calc(48px + env(safe-area-inset-bottom, 0px));
+}
+body.has-bar .wrap{padding-block-end:calc(132px + env(safe-area-inset-bottom, 0px))}
+
+/* brand */
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:36px}
+.mark{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--gold);display:grid;place-items:center;font-family:var(--display);font-style:italic;font-size:1.25rem;color:var(--gold);line-height:1}
+.brand-name{font-family:var(--display);font-size:1.15rem;letter-spacing:.02em;line-height:1.1}
+.brand-sub{font-size:.72rem;text-transform:uppercase;letter-spacing:.16em;color:var(--muted)}
+
+/* type */
+.eyebrow{margin:0;font-size:.75rem;text-transform:uppercase;letter-spacing:.16em;color:var(--accent)}
+.hero{margin:10px 0 0;font-family:var(--display);font-weight:500;font-size:clamp(2.6rem, 12vw, 3.7rem);line-height:1.02;letter-spacing:-.01em;text-wrap:balance}
+.hero em{font-style:italic;font-weight:400;color:var(--accent)}
+.title{margin:0;font-family:var(--display);font-weight:500;font-size:clamp(1.8rem, 8vw, 2.3rem);line-height:1.08;text-wrap:balance}
+.lede{margin:0;color:var(--muted);max-width:36ch}
+.screen{animation:rise .4s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{transform:translateY(10px)}to{transform:none}}
+
+/* cover */
+.cover{display:grid;gap:26px}
+.cover .lede{font-size:1.05rem;color:var(--fg);opacity:.86}
+.facts{margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;border-top:1px solid var(--line);padding-top:16px}
+.facts dt{font-size:.68rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+.facts dd{margin:2px 0 0;font-size:.95rem;line-height:1.3}
+.facts dd b{font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums}
+.rsvp{display:grid;gap:10px;justify-items:center}
+.rsvp .btn{width:100%}
+.fine{margin:0;text-align:center;font-size:.82rem;color:var(--muted);text-wrap:balance}
+
+/* buttons */
+.btn{
+  min-height:50px;padding:13px 22px;border-radius:999px;border:1px solid transparent;
+  font-weight:500;font-size:1rem;letter-spacing:.01em;cursor:pointer;
+  transition:transform .25s ease, background-color .2s, opacity .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--fg)}
+.btn:disabled{opacity:.38;cursor:not-allowed}
+#yes{transform:scale(var(--g,1))}
+#no{transform:scale(var(--s,1));width:auto;min-width:60%}
+.link{justify-self:start;background:none;border:0;padding:8px 0;color:var(--accent);text-decoration:underline;text-underline-offset:4px;cursor:pointer;font-size:.95rem}
+
+/* step */
+.step{display:grid;gap:30px}
+.step-head{display:grid;gap:12px}
+.progress{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:.75rem;text-transform:uppercase;letter-spacing:.16em;color:var(--muted)}
+.progress b{font-weight:500;color:var(--accent);text-align:right}
+.track{height:2px;background:var(--line);border-radius:2px;overflow:hidden}
+.track i{display:block;height:100%;background:var(--accent);border-radius:2px;transition:width .4s ease}
+
+fieldset{border:0;margin:0;padding:0;min-width:0}
+.field{display:grid;gap:12px}
+.flabel{padding:0;display:flex;justify-content:space-between;align-items:baseline;gap:12px;width:100%;font-size:.75rem;text-transform:uppercase;letter-spacing:.14em;color:var(--fg)}
+.flabel .hint{text-transform:none;letter-spacing:0;font-size:.82rem;color:var(--muted)}
+
+/* option rows */
+.opts{display:grid;gap:8px}
+.opt{
+  position:relative;display:flex;align-items:center;gap:14px;
+  padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  cursor:pointer;transition:border-color .15s, background-color .15s, opacity .15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.opt input,.chip input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.opt-body{flex:1;min-width:0;display:grid;gap:1px}
+.opt-title{font-weight:500;font-size:1rem;line-height:1.3}
+.opt-desc{font-size:.85rem;color:var(--muted);line-height:1.35}
+.tick{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;transition:background-color .15s,border-color .15s}
+.opt.multi .tick{border-radius:7px}
+.opt.on{border-color:var(--accent);background:var(--accent-soft)}
+.opt.on .tick{background:var(--accent);border-color:var(--accent)}
+.opt.on .tick::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent-ink)}
+.opt.multi.on .tick::after{width:6px;height:11px;border-radius:0;background:none;border:solid var(--accent-ink);border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
+.opt.off{opacity:.42;cursor:not-allowed}
+.opt:has(input:focus-visible),.chip:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+
+/* doneness */
+.swatch{flex:none;width:36px;height:36px;border-radius:50%;background:radial-gradient(circle, var(--c) 0 56%, var(--crust) 61% 100%)}
+.temp{flex:none;font-family:var(--mono);font-size:.92rem;color:var(--gold);font-variant-numeric:tabular-nums}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative;padding:9px 15px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:.95rem;cursor:pointer;transition:background-color .15s,border-color .15s;-webkit-tap-highlight-color:transparent}
+.chip.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+textarea{
+  width:100%;min-height:110px;resize:vertical;padding:12px 14px;
+  background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:var(--r);
+  font:inherit;font-size:16px;line-height:1.45;
+}
+textarea::placeholder,.text-in::placeholder{color:var(--muted);opacity:.8}
+textarea:focus,.text-in:focus{outline:none;border-color:var(--accent)}
+.custom{display:grid;gap:6px;margin-top:4px}
+.sublabel{font-size:.85rem;color:var(--muted)}
+.text-in{
+  width:100%;min-height:48px;padding:11px 14px;
+  background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:var(--r);
+  font:inherit;font-size:16px;
+}
+
+/* bottom bar */
+.bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:5;
+  background:var(--bg);border-top:1px solid var(--line);
+  padding-top:12px;
+  padding-bottom:calc(12px + env(safe-area-inset-bottom, 0px));
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+}
+.bar-in{max-width:30rem;margin:0 auto;display:flex;align-items:center;gap:12px}
+.bar .btn{min-height:48px;padding:11px 20px}
+.bar-status{flex:1;min-width:0;text-align:center;font-size:.85rem;color:var(--muted);line-height:1.25}
+#next{min-width:7.5rem}
+
+/* review */
+.summary{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.sum-row{width:100%;display:grid;grid-template-columns:6.2rem minmax(0,1fr) auto;gap:12px;align-items:baseline;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:14px 0;cursor:pointer}
+.sum-row.static{cursor:default}
+.sum-k{font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+.sum-v{font-size:.98rem;line-height:1.4;overflow-wrap:anywhere}
+.sum-edit{font-size:.85rem;color:var(--accent)}
+
+/* done + docket */
+.done{display:grid;gap:22px}
+.pill{justify-self:start;display:inline-flex;align-items:center;gap:10px;padding:8px 16px 8px 13px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:.92rem;margin:0}
+.pill .dot{flex:none;width:10px;height:10px;border-radius:50%;background:var(--muted)}
+.pill[data-state="sending"] .dot{background:var(--gold);animation:pulse 1s ease-in-out infinite}
+.pill[data-state="sent"]{border-color:var(--accent)}
+.pill[data-state="sent"] .dot{background:var(--accent)}
+.pill[data-state="failed"]{border-color:var(--gold)}
+.pill[data-state="failed"] .dot{background:var(--gold)}
+@keyframes pulse{50%{opacity:.25}}
+.slot{position:relative;overflow:hidden;padding:0 6px 16px}
+.slot::before{content:"";display:block;height:6px;border-radius:6px;background:var(--surface-2);margin:0 -6px 0;position:relative;z-index:2}
+.docket{
+  position:relative;background:var(--paper);color:var(--ink);
+  font-family:var(--mono);font-size:13.5px;line-height:1.5;
+  padding:20px 18px 16px;transform-origin:top center;
+  box-shadow:0 22px 40px -22px var(--shadow);
+}
+.docket::after{
+  content:"";position:absolute;left:0;right:0;bottom:-8px;height:8px;
+  background:
+    linear-gradient(135deg, var(--paper) 50%, transparent 50%) 0 0/16px 8px repeat-x,
+    linear-gradient(225deg, var(--paper) 50%, transparent 50%) 0 0/16px 8px repeat-x;
+}
+.docket.print{animation:emerge 1.15s cubic-bezier(.25,.8,.25,1) both}
+@keyframes emerge{from{transform:translateY(-104%)}to{transform:none}}
+.dhead{text-align:center;display:grid;gap:1px}
+.dbrand{font-weight:700;letter-spacing:.22em;font-size:15px}
+.drule{border-top:1.5px dashed var(--ink-muted);margin:10px 0}
+.drule.dbl{border-top:3px double var(--ink);margin-top:14px}
+.dwhen{text-align:center;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.dpick{text-align:center}
+.dsec{margin-top:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:12px;color:var(--ink-muted)}
+.dl{display:flex;gap:8px}
+.dq{flex:none;width:1.6ch}
+.dn{flex:1;min-width:0;overflow-wrap:anywhere}
+.dx{flex:none;text-align:right;font-variant-numeric:tabular-nums}
+.dnote{overflow-wrap:anywhere}
+.dtotal{font-weight:700}
+.dfoot{text-align:center;margin-top:12px;font-size:12px;color:var(--ink-muted)}
+
+.send{display:grid;gap:12px;padding:18px;border:1px solid var(--gold);border-radius:var(--r);background:var(--surface)}
+.send h3{margin:0;font-family:var(--display);font-weight:500;font-size:1.35rem;line-height:1.15}
+.send p{margin:0;color:var(--muted);font-size:.95rem}
+.send .btn{width:100%}
+.copy-note{min-height:1.4em;color:var(--accent)!important}
+#msg{min-height:0;font-family:var(--mono);font-size:13px;line-height:1.45;color:var(--muted);background:var(--bg)}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="brand">
+    <span class="mark" aria-hidden="true">B</span>
+    <div>
+      <div class="brand-name">Chez Benas</div>
+      <div class="brand-sub">Table for two</div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="screen cover" id="cover">
+      <div>
+        <p class="eyebrow">You're invited</p>
+        <h1 class="hero" tabindex="-1" data-focus>Dinner at mine, <em>steak for two.</em></h1>
+      </div>
+      <p class="lede">I'm cooking us steak tonight. I'll pick you up from work at 4:30 pm. Until then, choose your sides, drinks, dessert and what we do after, and leave the rest to me.</p>
+      <dl class="facts">
+        <div><dt>When</dt><dd>Today, <b>4:30 pm</b></dd></div>
+        <div><dt>Where</dt><dd>My place</dd></div>
+        <div><dt>Your chef</dt><dd>Benas</dd></div>
+      </dl>
+      <div class="rsvp">
+        <button class="btn primary" id="yes" type="button">Yes, book me in</button>
+        <button class="btn ghost" id="no" type="button">Maybe another time</button>
+      </div>
+      <p class="fine">Takes about two minutes. Reply soon so I have time to shop.</p>
+    </section>
+
+    <div id="steps"></div>
+
+    <section class="screen step" id="review" hidden>
+      <div class="step-head">
+        <div class="progress"><span>Last look</span><b>Almost done</b></div>
+        <div class="track"><i style="width:100%"></i></div>
+        <h2 class="title" tabindex="-1" data-focus>Here's your booking</h2>
+        <p class="lede">Check it over. Tap any line to change it.</p>
+      </div>
+      <ul class="summary" id="summary"></ul>
+    </section>
+
+    <section class="screen done" id="done" hidden>
+      <div>
+        <p class="eyebrow">Booking confirmed</p>
+        <h2 class="hero" tabindex="-1" data-focus>See you <em>tonight.</em></h2>
+      </div>
+      <p class="pill" id="send-status" data-state="sending" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="send-status-text">Sending to Benas…</span></p>
+      <p class="lede" id="done-lede">Here's your order, straight from the kitchen.</p>
+      <div class="send" id="fallback" hidden>
+        <h3>Send it to Benas instead</h3>
+        <p>It didn't reach him automatically. Try again, or copy your booking and paste it into your chat with Benas.</p>
+        <button class="btn primary" id="retry" type="button">Try sending again</button>
+        <button class="btn ghost" id="copy" type="button">Copy my booking</button>
+        <p class="copy-note" id="copy-note" role="status" aria-live="polite"></p>
+        <label for="msg" class="flabel"><span>What gets copied</span></label>
+        <textarea id="msg" readonly rows="9"></textarea>
+      </div>
+      <div class="slot"><div class="docket" id="docket"></div></div>
+      <button class="link" id="edit-again" type="button">Change something</button>
+    </section>
+  </main>
+</div>
+
+<nav class="bar" id="bar" hidden aria-label="Booking steps">
+  <div class="bar-in">
+    <button class="btn ghost" id="back" type="button">Back</button>
+    <span class="bar-status" id="status" aria-live="polite"></span>
+    <button class="btn primary" id="next" type="button">Next</button>
+  </div>
+</nav>
+
+<script>
+(function(){
+  "use strict";
+
+  /* Web3Forms public access key. Bookings are emailed to the inbox it was created with. */
+  var ACCESS_KEY = "f2d3312e-beae-4ef3-ad28-49dc80acc4fa";
+  var ENDPOINT = "https://api.web3forms.com/submit";
+
+  var KEY = "chez-benas-site-v1";
+  var $ = function(id){ return document.getElementById(id); };
+  var esc = function(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]; }); };
+
+  var DATE_LABEL = "Wednesday 4 November";
+  var PICKUP = "4:30 pm";
+
+  /* ---------- menu ---------- */
+  var DONENESS = [
+    ["rare","Rare","Cool red centre","52°C","--done-1"],
+    ["medium-rare","Medium rare","Warm red centre. The chef's favourite","57°C","--done-2"],
+    ["medium","Medium","Warm pink centre","63°C","--done-3"],
+    ["medium-well","Medium well","Just a hint of pink","68°C","--done-4"],
+    ["well-done","Well done","Cooked all the way through","71°C","--done-5"]
+  ];
+
+  var STEPS = [
+    { id:"steak", short:"The steak", title:"How do you like your steak?", lede:"Seared hard in a hot pan, basted in butter and rested. You decide how far I take it.",
+      fields:[
+        { key:"doneness", type:"doneness", label:"Cook", hint:"core temperature", req:true, need:"Choose a cook" },
+        { key:"sauce", type:"list", label:"Finish", hint:"pick one", req:true, need:"Choose a finish", options:[
+          ["salt","Just salt","Let the steak speak for itself"],
+          ["garlic-butter","Garlic butter","Melting over the top"],
+          ["thyme-butter","Thyme butter","Fresh thyme, slowly melted"],
+          ["garlic-thyme-butter","Garlic and thyme butter","The best of both"]
+        ]}
+      ]},
+    { id:"sides", short:"Sides", title:"Choose your sides", lede:"Pick up to three to go with the steak.",
+      fields:[
+        { key:"sides", type:"list", label:"Sides", hint:"up to three", max:3, req:true, need:"Pick at least one", options:[
+          ["roast-potatoes","Crispy roast potatoes","Rosemary and sea salt"],
+          ["mash","Creamy mash","A lot of butter"],
+          ["asparagus","Garlic asparagus","Seared with garlic"],
+          ["broccolini","Garlic broccolini","Charred with garlic"],
+          ["capsicum","Grilled capsicum","Sweet and smoky"]
+        ]}
+      ]},
+    { id:"drinks", short:"Drinks", title:"Something to drink", lede:"Pick one or two to open tonight.",
+      fields:[
+        { key:"drink", type:"list", label:"Drinks", hint:"up to two", max:2, req:true, need:"Pick a drink", options:[
+          ["red","Bottle of red","A smooth Shiraz"],
+          ["white","Bottle of white","Crisp and cold"],
+          ["bubbles","Bottle of bubbles","Because why not"],
+          ["mocktail","Mocktail","Fruity, no alcohol"],
+          ["water","Water","Keeping it simple"]
+        ]}
+      ]},
+    { id:"dessert", short:"Dessert", title:"Save room for dessert", lede:"Pick one. The chef will take care of it.",
+      fields:[
+        { key:"dessert", type:"list", label:"Dessert", hint:"pick one", req:true, need:"Choose a dessert", options:[
+          ["tiramisu","Tiramisu","Coffee, mascarpone and cocoa"],
+          ["strawberries","Chocolate-dipped strawberries","Simple and sweet"],
+          ["affogato","Affogato","Vanilla gelato and hot espresso"],
+          ["surprise","Surprise me","Trust the chef"],
+          ["wink",";)",""]
+        ]}
+      ]},
+    { id:"after", short:"After dinner", title:"After dinner", lede:"How should we spend the rest of the night?",
+      fields:[
+        { key:"after", type:"list", label:"Plans", hint:"up to two", max:2, req:true, need:"Pick at least one", options:[
+          ["movie","Movie night","Couch, blanket, your pick of film"],
+          ["walk","Late night walk","Walk it off, sort of"],
+          ["dance","Dancing in the kitchen","Music up, lights low"],
+          ["chat","Couch and a long chat","Phones away"],
+          ["surprise","Surprise me","I have ideas"]
+        ]},
+        { key:"movie", type:"chips", label:"What kind of movie?", hint:"optional", options:[["romcom","Rom-com"],["thriller","Thriller"],["comedy","Comedy"],["animated","Animated"],["classic","A classic"],["you-pick","You pick"]] }
+      ]},
+    { id:"details", short:"Final touches", title:"Final touches", lede:"Set the mood, and tell me anything I should know.",
+      fields:[
+        { key:"music", type:"chips", label:"Music", hint:"optional", custom:"An artist, a song or a playlist", options:[["jazz","Jazz"],["rnb","R&B"],["indie","Indie"],["throwbacks","2000s throwbacks"],["lofi","Lo-fi"],["your-call","Your call"]] },
+        { key:"dress", type:"chips", label:"Dress code", hint:"optional", options:[["comfy","Comfy clothes"],["smart","Smart casual"],["dressed-up","Dressed up"]] },
+        { key:"notes", type:"text", label:"A note for the chef", hint:"optional" }
+      ]}
+  ];
+
+  var FIELDS = {};
+  STEPS.forEach(function(s){ s.fields.forEach(function(f){ FIELDS[f.key] = f; }); });
+
+  var SCREENS = ["cover"].concat(STEPS.map(function(s){ return "step-"+s.id; }), ["review","done"]);
+  var REVIEW = SCREENS.indexOf("review"), DONE = SCREENS.indexOf("done");
+
+  var state = { doneness:null, sauce:null, sides:[], drink:[], dessert:null, after:[], movie:null, music:null, musicText:"", dress:null, notes:"", orderNo:null, confirmedAt:null, sentText:"", screen:0 };
+
+  /* ---------- render steps ---------- */
+  function fieldHTML(f){
+    var legend = '<legend class="flabel"><span>'+esc(f.label)+'</span>'+(f.hint ? '<span class="hint">'+esc(f.hint)+'</span>' : '')+'</legend>';
+    var body = "";
+    if(f.type === "chips"){
+      body = '<div class="chips">'+f.options.map(function(o){
+        return '<label class="chip" data-key="'+f.key+'" data-v="'+o[0]+'"><input type="radio" name="'+f.key+'" value="'+o[0]+'" id="'+f.key+'-'+o[0]+'">'+esc(o[1])+'</label>';
+      }).join("")+'</div>';
+      if(f.custom){
+        body += '<div class="custom"><label class="sublabel" for="'+f.key+'-text">Or type your own</label><input type="text" class="text-in" id="'+f.key+'-text" maxlength="80" autocomplete="off" placeholder="'+esc(f.custom)+'"></div>';
+      }
+    } else if(f.type === "doneness"){
+      body = '<div class="opts">'+DONENESS.map(function(o){
+        return '<label class="opt" data-key="doneness" data-v="'+o[0]+'"><input type="radio" name="doneness" value="'+o[0]+'" id="doneness-'+o[0]+'"><span class="swatch" style="--c:var('+o[4]+')" aria-hidden="true"></span><span class="opt-body"><span class="opt-title">'+esc(o[1])+'</span><span class="opt-desc">'+esc(o[2])+'</span></span><span class="temp">'+o[3]+'</span><span class="tick" aria-hidden="true"></span></label>';
+      }).join("")+'</div>';
+    } else if(f.type === "list"){
+      var multi = (f.max||1) > 1, type = multi ? "checkbox" : "radio";
+      body = '<div class="opts">'+f.options.map(function(o){
+        return '<label class="opt'+(multi?' multi':'')+'" data-key="'+f.key+'" data-v="'+o[0]+'"><input type="'+type+'" name="'+f.key+'" value="'+o[0]+'" id="'+f.key+'-'+o[0]+'"><span class="opt-body"><span class="opt-title">'+esc(o[1])+'</span>'+(o[2]?'<span class="opt-desc">'+esc(o[2])+'</span>':'')+'</span><span class="tick" aria-hidden="true"></span></label>';
+      }).join("")+'</div>';
+    } else if(f.type === "text"){
+      return '<div class="field"><label class="flabel" for="notes"><span>'+esc(f.label)+'</span><span class="hint">'+esc(f.hint)+'</span></label><textarea id="notes" maxlength="400" placeholder="Allergies, anything you don\'t eat, or a request"></textarea></div>';
+    }
+    return '<fieldset class="field" id="f-'+f.key+'">'+legend+body+'</fieldset>';
+  }
+
+  $("steps").innerHTML = STEPS.map(function(s, i){
+    var pct = Math.round(((i+1)/(STEPS.length+1))*100);
+    return '<section class="screen step" id="step-'+s.id+'" hidden>'+
+      '<div class="step-head"><div class="progress"><span>Course '+(i+1)+' of '+STEPS.length+'</span><b>'+esc(s.short)+'</b></div>'+
+      '<div class="track"><i style="width:'+pct+'%"></i></div>'+
+      '<h2 class="title" tabindex="-1" data-focus>'+esc(s.title)+'</h2><p class="lede">'+esc(s.lede)+'</p></div>'+
+      s.fields.map(fieldHTML).join("")+'</section>';
+  }).join("");
+
+  /* ---------- state ---------- */
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY); if(!raw) return;
+      var d = JSON.parse(raw); if(!d || typeof d !== "object") return;
+      Object.keys(state).forEach(function(k){
+        if(!(k in d)) return;
+        if(Array.isArray(state[k])){ if(Array.isArray(d[k])) state[k] = d[k].filter(function(x){ return typeof x === "string"; }); }
+        else if(d[k] === null || typeof d[k] === "string" || typeof d[k] === "number") state[k] = d[k];
+      });
+    }catch(e){}
+  }
+  function lab(key, v){ var f = FIELDS[key]; if(!f || !f.options) return ""; var o = f.options.filter(function(o){ return o[0]===v; })[0]; return o ? o[1] : ""; }
+  function labs(key){ var f = FIELDS[key]; return f.options.filter(function(o){ return state[key].indexOf(o[0]) > -1; }).map(function(o){ return o[1]; }); }
+  function missing(step){
+    for(var i=0;i<step.fields.length;i++){
+      var f = step.fields[i]; if(!f.req) continue;
+      var v = state[f.key];
+      if(Array.isArray(v) ? v.length < (f.min||1) : !v) return f.need;
+    }
+    return "";
+  }
+  function firstInvalid(){ for(var i=0;i<STEPS.length;i++){ if(missing(STEPS[i])) return i+1; } return null; }
+
+  function sync(){
+    document.querySelectorAll("[data-key]").forEach(function(el){
+      var key = el.dataset.key, v = el.dataset.v, val = state[key];
+      var on = Array.isArray(val) ? val.indexOf(v) > -1 : val === v;
+      el.classList.toggle("on", on);
+      var inp = el.querySelector("input"); inp.checked = on;
+      if(Array.isArray(val)){
+        var full = val.length >= (FIELDS[key].max||1) && !on;
+        el.classList.toggle("off", full); inp.disabled = full;
+      }
+    });
+    $("f-movie").hidden = state.after.indexOf("movie") < 0;
+  }
+
+  /* ---------- navigation ---------- */
+  var bar = $("bar"), next = $("next"), back = $("back"), statusEl = $("status");
+  var cur = 0;
+
+  function updateBar(){
+    if(cur === REVIEW){ next.textContent = "Confirm booking"; next.disabled = !!firstInvalid(); statusEl.textContent = ""; return; }
+    var step = STEPS[cur-1]; if(!step) return;
+    next.textContent = cur === STEPS.length ? "Review" : "Next";
+    var miss = missing(step);
+    next.disabled = !!miss;
+    if(miss){ statusEl.textContent = miss; return; }
+    var multi = step.fields.filter(function(f){ return (f.max||1) > 1; })[0];
+    statusEl.textContent = multi ? state[multi.key].length+" of "+multi.max+" picked" : "";
+  }
+
+  function show(i, opts){
+    opts = opts || {};
+    cur = i;
+    SCREENS.forEach(function(id, j){ $(id).hidden = j !== i; });
+    var withBar = (i >= 1 && i <= STEPS.length) || i === REVIEW;
+    bar.hidden = !withBar;
+    document.body.classList.toggle("has-bar", withBar);
+    if(i === REVIEW) renderSummary();
+    updateBar();
+    window.scrollTo(0, 0);
+    if(!opts.noFocus){ var h = $(SCREENS[i]).querySelector("[data-focus]"); if(h) try{ h.focus({preventScroll:true}); }catch(e){} }
+    state.screen = i; save();
+  }
+
+  next.addEventListener("click", function(){
+    if(next.disabled) return;
+    if(cur === REVIEW){ confirmBooking(); return; }
+    show(cur + 1);
+  });
+  back.addEventListener("click", function(){ show(Math.max(0, cur - 1)); });
+
+  /* ---------- inputs ---------- */
+  var main = $("main");
+  main.addEventListener("change", function(e){
+    var inp = e.target, key = inp.name;
+    if(!key || !(key in FIELDS)) return;
+    if(inp.type === "checkbox"){
+      var f = FIELDS[key];
+      var arr = state[key].filter(function(x){ return x !== inp.value; });
+      if(inp.checked && arr.length < f.max) arr.push(inp.value);
+      state[key] = arr;
+      if(key === "after" && arr.indexOf("movie") < 0) state.movie = null;
+    } else if(inp.type === "radio"){
+      state[key] = inp.value;
+    }
+    sync(); save(); updateBar();
+  });
+  main.addEventListener("input", function(e){
+    if(e.target.id === "notes"){ state.notes = e.target.value.slice(0, 400); save(); }
+    if(e.target.id === "music-text"){ state.musicText = e.target.value.slice(0, 80); save(); }
+  });
+
+  /* ---------- cover ---------- */
+  var yes = $("yes"), no = $("no");
+  var teases = ["Are you sure?","There's dessert, though","It's steak…","Okay, now you're teasing"];
+  var tease = 0;
+  yes.addEventListener("click", function(){ show(1); });
+  no.addEventListener("click", function(){
+    if(tease >= teases.length){ no.hidden = true; return; }
+    no.textContent = teases[tease]; tease++;
+    no.style.setProperty("--s", String(1 - tease*0.11));
+    yes.style.setProperty("--g", String(1 + tease*0.035));
+  });
+
+  /* ---------- review ---------- */
+  var NONE = "Not chosen";
+  function steakLine(o){ return o.doneness ? o.doneness+" ("+o.temp+") with "+o.sauce.toLowerCase() : NONE; }
+  function renderSummary(){
+    var o = buildOrder();
+    var rows = [
+      ["When", "Today, "+PICKUP+". I'll pick you up from work", null],
+      ["Steak", steakLine(o), 1],
+      ["Sides", o.sides.join(", ") || NONE, 2],
+      ["Drinks", o.drinks.join(", ") || NONE, 3],
+      ["Dessert", o.dessert || NONE, 4],
+      ["After", o.after.join(", ") || NONE, 5],
+      ["Mood", [o.music, o.dress].filter(Boolean).join(", ") || "Chef's choice", 6]
+    ];
+    if(o.notes) rows.push(["Note", o.notes, 6]);
+    $("summary").innerHTML = rows.map(function(r){
+      if(r[2] === null) return '<li><div class="sum-row static"><span class="sum-k">'+esc(r[0])+'</span><span class="sum-v">'+esc(r[1])+'</span><span></span></div></li>';
+      return '<li><button class="sum-row" type="button" data-go="'+r[2]+'"><span class="sum-k">'+esc(r[0])+'</span><span class="sum-v">'+esc(r[1])+'</span><span class="sum-edit">Edit</span></button></li>';
+    }).join("");
+  }
+  $("summary").addEventListener("click", function(e){
+    var b = e.target.closest("[data-go]"); if(b) show(Number(b.dataset.go));
+  });
+
+  /* ---------- order ---------- */
+  function buildOrder(){
+    var dn = DONENESS.filter(function(d){ return d[0] === state.doneness; })[0] || [];
+    var after = labs("after");
+    if(state.movie){ var g = lab("movie", state.movie).toLowerCase(); after = after.map(function(a){ return a === "Movie night" ? "Movie night ("+g+")" : a; }); }
+    return {
+      orderNo: state.orderNo || "",
+      dateLabel: DATE_LABEL,
+      timeLabel: PICKUP,
+      doneness: dn[1] || "",
+      temp: dn[3] || "",
+      sauce: lab("sauce", state.sauce),
+      sides: labs("sides"),
+      drinks: labs("drink"),
+      dessert: lab("dessert", state.dessert),
+      after: after,
+      music: [lab("music", state.music), (state.musicText || "").trim()].filter(Boolean).join(", "),
+      dress: lab("dress", state.dress),
+      notes: (state.notes || "").trim()
+    };
+  }
+
+  function docketHTML(o){
+    var L = function(q, name, extra){ return '<div class="dl"><span class="dq">'+esc(q)+'</span><span class="dn">'+esc(name)+'</span>'+(extra?'<span class="dx">'+esc(extra)+'</span>':'')+'</div>'; };
+    var sec = function(t){ return '<div class="dsec">'+esc(t)+'</div>'; };
+    var h = '<div class="dhead"><div class="dbrand">CHEZ BENAS</div><div>Table 1 · Covers 2</div><div>Order #'+esc(o.orderNo)+'</div></div>';
+    h += '<div class="drule"></div><div class="dwhen">'+esc(o.dateLabel)+'</div><div class="dpick">Pickup from work · '+esc(o.timeLabel)+'</div><div class="drule"></div>';
+    h += sec("Mains") + L("1", "Steak, "+o.doneness.toLowerCase(), o.temp) + (o.sauce ? L("", "+ "+o.sauce) : "");
+    if(o.sides.length) h += sec("Sides") + o.sides.map(function(x){ return L("1", x); }).join("");
+    if(o.drinks.length) h += sec("Drinks") + o.drinks.map(function(x){ return L("1", x); }).join("");
+    if(o.dessert) h += sec("Dessert") + L("1", o.dessert);
+    if(o.after.length) h += sec("After dinner") + o.after.map(function(x){ return L("·", x); }).join("");
+    if(o.music || o.dress){ h += '<div class="drule"></div>' + (o.music ? L("", "Music", o.music) : "") + (o.dress ? L("", "Dress", o.dress) : ""); }
+    if(o.notes) h += '<div class="drule"></div><div class="dnote">Note to chef: “'+esc(o.notes)+'”</div>';
+    h += '<div class="drule dbl"></div><div class="dl dtotal"><span class="dn">TOTAL</span><span class="dx">ON THE HOUSE</span></div><div class="dfoot">Thank you for dining with us</div>';
+    return h;
+  }
+
+  function buildText(o){
+    var lines = ["My booking at Chez Benas 🍷",
+      "When: today, pickup from work at "+o.timeLabel,
+      "Steak: "+steakLine(o),
+      "Sides: "+o.sides.join(", "),
+      "Drinks: "+o.drinks.join(", "),
+      "Dessert: "+o.dessert,
+      "After dinner: "+o.after.join(", ")];
+    if(o.music) lines.push("Music: "+o.music);
+    if(o.dress) lines.push("Dress code: "+o.dress);
+    if(o.notes) lines.push("Note: "+o.notes);
+    return lines.join("\n");
+  }
+
+  /* ---------- send by email ---------- */
+  var COPY = {
+    sending: ["Sending to Benas…", "Here's your order, straight from the kitchen."],
+    sent:    ["Sent to Benas", "Benas has your booking. That's all you need to do. See you at 4:30."],
+    failed:  ["Didn't send automatically", "Here's your order, straight from the kitchen."]
+  };
+  function setSendState(s){
+    $("send-status").dataset.state = s;
+    $("send-status-text").textContent = COPY[s][0];
+    $("done-lede").textContent = COPY[s][1];
+    $("fallback").hidden = s !== "failed";
+    $("retry").disabled = false;
+  }
+
+  var sending = false;
+  function sendBooking(){
+    if(sending) return;
+    var o = buildOrder(), text = buildText(o);
+    var update = !!state.sentText;
+    sending = true;
+    setSendState("sending");
+    var payload = {
+      access_key: ACCESS_KEY,
+      subject: "🍷 "+(update ? "Updated" : "New")+" booking at Chez Benas (order #"+o.orderNo+")",
+      from_name: "Chez Benas",
+      name: "Dinner booking",
+      "Pickup": "Today, "+o.timeLabel+" from work",
+      "Steak": steakLine(o),
+      "Sides": o.sides.join(", "),
+      "Drinks": o.drinks.join(", "),
+      "Dessert": o.dessert,
+      "After dinner": o.after.join(", "),
+      "Music": o.music || "Chef's choice",
+      "Dress code": o.dress || "Chef's choice",
+      "Note to chef": o.notes || "None",
+      "Order": "#"+o.orderNo
+    };
+    var finished = false;
+    var finish = function(ok){
+      if(finished) return; finished = true; sending = false;
+      if(ok){ state.sentText = text; save(); }
+      setSendState(ok ? "sent" : "failed");
+    };
+    var timer = setTimeout(function(){ finish(false); }, 20000);
+    try{
+      fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(payload)
+      }).then(function(r){
+        return r.json().catch(function(){ return {}; }).then(function(j){ return r.ok && j && j.success === true; });
+      }).then(function(ok){ clearTimeout(timer); finish(ok); }, function(){ clearTimeout(timer); finish(false); });
+    }catch(e){ clearTimeout(timer); finish(false); }
+  }
+
+  function renderDone(o){
+    var d = $("docket");
+    d.innerHTML = docketHTML(o);
+    d.classList.remove("print"); void d.offsetWidth; d.classList.add("print");
+    var msg = $("msg");
+    msg.value = buildText(o);
+    msg.rows = Math.min(12, msg.value.split("\n").length + 1);
+    $("copy-note").textContent = "";
+    $("copy").textContent = "Copy my booking";
+  }
+
+  function confirmBooking(){
+    var bad = firstInvalid();
+    if(bad){ show(bad); return; }
+    if(!state.orderNo) state.orderNo = String(Math.floor(1000 + Math.random()*9000));
+    state.confirmedAt = new Date().toISOString();
+    var o = buildOrder();
+    renderDone(o);
+    show(DONE);
+    if(state.sentText && state.sentText === buildText(o)) setSendState("sent");
+    else sendBooking();
+  }
+
+  $("retry").addEventListener("click", function(){ $("retry").disabled = true; sendBooking(); });
+  $("copy").addEventListener("click", function(){
+    var msg = $("msg"), t = msg.value, note = $("copy-note"), btn = $("copy");
+    var ok = function(){ btn.textContent = "Copied"; note.textContent = "Copied. Open your chat with Benas, paste it in and send."; };
+    var fail = function(){
+      try{ msg.focus(); msg.select(); msg.setSelectionRange(0, t.length); }catch(e){}
+      note.textContent = "Your phone didn't allow the copy button. Press and hold the text below, then tap Copy.";
+    };
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(ok, fail); }
+      else fail();
+    }catch(e){ fail(); }
+  });
+  $("edit-again").addEventListener("click", function(){ show(REVIEW); });
+
+  /* ---------- start ---------- */
+  load();
+  sync();
+  $("notes").value = state.notes || "";
+  $("music-text").value = state.musicText || "";
+  var start = Number(state.screen) || 0;
+  if(start === DONE && !state.confirmedAt) start = REVIEW;
+  if(start > 1){ var bad = firstInvalid(); if(bad && bad < start) start = bad; }
+  if(start < 0 || start >= SCREENS.length) start = 0;
+  if(start === DONE){
+    var o0 = buildOrder();
+    renderDone(o0);
+    setSendState(state.sentText && state.sentText === buildText(o0) ? "sent" : "failed");
+  }
+  show(start, { noFocus:true });
+})();
+</script>
+</body>
+</html>
