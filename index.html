@@ -363,11 +363,9 @@ textarea:focus,.text-in:focus{outline:none;border-color:var(--accent)}
     { id:"drinks", short:"Drinks", title:"Something to drink", lede:"Pick one or two to open tonight.",
       fields:[
         { key:"drink", type:"list", label:"Drinks", hint:"up to two", max:2, req:true, need:"Pick a drink", options:[
-          ["red","Bottle of red","A smooth Shiraz"],
-          ["white","Bottle of white","Crisp and cold"],
-          ["bubbles","Bottle of bubbles","Because why not"],
-          ["mocktail","Mocktail","Fruity, no alcohol"],
-          ["water","Water","Keeping it simple"]
+          ["red","Red","A smooth Shiraz"],
+          ["white","White","Crisp and cold"],
+          ["bubbles","Bubbles","Because why not"]
         ]}
       ]},
     { id:"dessert", short:"Dessert", title:"Save room for dessert", lede:"Pick one. The chef will take care of it.",
@@ -454,6 +452,13 @@ textarea:focus,.text-in:focus{outline:none;border-color:var(--accent)}
         else if(d[k] === null || typeof d[k] === "string" || typeof d[k] === "number") state[k] = d[k];
       });
     }catch(e){}
+    /* drop saved picks that are no longer on the menu */
+    Object.keys(FIELDS).forEach(function(k){
+      var f = FIELDS[k]; if(!f.options) return;
+      var ok = f.options.map(function(o){ return o[0]; });
+      if(Array.isArray(state[k])) state[k] = state[k].filter(function(v){ return ok.indexOf(v) > -1; });
+      else if(state[k] && ok.indexOf(state[k]) < 0) state[k] = null;
+    });
   }
   function lab(key, v){ var f = FIELDS[key]; if(!f || !f.options) return ""; var o = f.options.filter(function(o){ return o[0]===v; })[0]; return o ? o[1] : ""; }
   function labs(key){ var f = FIELDS[key]; return f.options.filter(function(o){ return state[key].indexOf(o[0]) > -1; }).map(function(o){ return o[1]; }); }
